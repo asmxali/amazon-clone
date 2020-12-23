@@ -1,10 +1,13 @@
 import "./App.css";
+import Header from "./Header";
+import Home from "./Home";
 
 function App() {
   return (
     //BEM convention
     <div className="app">
-      <h1> Let's get started! </h1>
+      <Header />
+      <Home />
     </div>
   );
 }
