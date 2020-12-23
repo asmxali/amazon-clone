@@ -28,10 +28,18 @@
 .product__price {
   margin-top: 5px;
 }
+.product__rating {
+  display: flex;
+}
 .product > button {
   background: #f0c14b;
   border: 1px solid;
-  margin-top: 10px;
-  border-color: #a88734 #9c7e31 #846a29;
+  background: linear-gradient(to bottom, #f7dfa5, #f0c14b);
   color: #111;
+  font-family: Arial, sans-serif;
+  font-size: 13px !important;
+  line-height: 25px !important;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4) inset;
+  border-radius: 3px;
+  width: 100%;
 }

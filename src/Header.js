@@ -8,8 +8,13 @@ function Header() {
     <div className="header">
       <img
         className="header__logo"
-        src="https://www.pentalic.com/wp-content/uploads/2018/12/Amazon-logo-white-small.png"
+        src="https://onlinebusinessmanager.com/wp-content/uploads/2018/09/white-amazon-logo-png-6.png"
       />
+
+      <div className="header__option">
+        <span className="header__optionLineOne">Deliver to</span>
+        <span className="header__optionLineTwo">Canada</span>
+      </div>
       <div className="header__search">
         <input className="header__searchInput" />
         <SearchIcon className="header__searchIcon" />
