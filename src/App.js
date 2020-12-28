@@ -3,10 +3,16 @@ import Header from "./Header";
 import Home from "./Home";
 import Login from "./Login";
 import Checkout from "./Checkout";
+import Payment from "./Payment";
+import Orders from "./Orders";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { auth } from "./firebase";
 import { useStateValue } from "./StateProvider";
 import React, { useEffect } from "react";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+
+const promise = loadStripe("pk_test_lZziMqbbScasVfJyeJpqFzDT00o4bxnswQ");
 
 function App() {
   const [{ user }, dispatch] = useStateValue();
@@ -35,15 +41,29 @@ function App() {
     //BEM convention
     <Router>
       <div className="app">
-        <Header />
         <Switch>
           <Route path="/login">
+            <Header />
             <Login></Login>
           </Route>
           <Route path="/checkout">
-            <Checkout />
+            <Header />
+            <Checkout></Checkout>
           </Route>
+          <Route path="/payment">
+            <Header />
+            <Elements stripe={promise}>
+              <Payment></Payment>
+            </Elements>
+          </Route>
+
+          <Route path="/orders">
+            <Header />
+            <Orders />
+          </Route>
+
           <Route path="/">
+            <Header />
             <Home />
           </Route>
         </Switch>
