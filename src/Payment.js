@@ -7,17 +7,18 @@ import { useElements, useStripe, CardElement } from "@stripe/react-stripe-js";
 import { getBasketTotal } from "./reducer";
 import CurrencyFormat from "react-currency-format";
 import axios from "./axios";
+import { db } from "./firebase";
 
 function Payment() {
   const [{ basket, user }, dispatch] = useStateValue();
   const history = useHistory();
   const stripe = useStripe();
   const elements = useElements();
-
+  const [processing, setProcessing] = useState("");
   const [error, setError] = useState(null);
   const [disabled, setDisabled] = useState(true);
   const [succeeded, setSucceeded] = useState(false);
-  const [processing, setProcessing] = useState("");
+
   const [clientSecret, setClientSecret] = useState(true);
 
   useEffect(() => {
@@ -45,8 +46,18 @@ function Payment() {
       .confirmCardPayment(clientSecret, {
         payment_method: { card: elements.getElement(CardElement) },
       })
-      .then(({ paymentIntend }) => {
+      .then(({ paymentIntent }) => {
         //paymentIntend is the payment confirmation
+        db.collection("users")
+          .doc(user?.uid)
+          .collection("orders")
+          .doc(paymentIntent.id)
+          .set({
+            basket: basket,
+            amount: paymentIntent.amount,
+            created: paymentIntent.created,
+          });
+
         setSucceeded(true);
         setError(null);
         setProcessing(false);
@@ -59,7 +70,8 @@ function Payment() {
       });
   };
   const handleChange = (event) => {
-    //lusten for change in card element
+    //listen for change in card element
+    setDisabled(false);
     //display any errors based on those changes
   };
   return (

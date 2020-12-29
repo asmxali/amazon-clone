@@ -28,7 +28,7 @@ app.post("/payments/create", async (req, res) => {
     currency: "cad",
     payment_method_types: ["card"],
   });
-
+  console.log(paymentIntent);
   //send OK response that its good
   res.status(201).send({ clientSecret: paymentIntent.client_secret });
 });
